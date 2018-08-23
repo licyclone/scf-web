@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwork.javadev.modules.scf.dao.cm.KhCyzDao">
+    
+	<sql id="khCyzColumns">
+		a.id AS "id",
+		a.khbh AS "khbh",
+		a.khmc AS "khmc",
+		a.khlx AS "khlx",
+		a.zjlx AS "zjlx",
+		a.zjhm AS "zjhm",
+		a.bz AS "bz",
+		a.zt AS "zt",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="khCyzJoins">
+	</sql>
+    
+	<select id="get" resultType="KhCyz">
+		SELECT 
+			<include refid="khCyzColumns"/>
+		FROM kh_cyz a
+		<include refid="khCyzJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="KhCyz">
+		SELECT 
+			<include refid="khCyzColumns"/>
+		FROM kh_cyz a
+		<include refid="khCyzJoins"/>
+		<where>
+			
+			<if test="khmc != null and khmc != ''">
+				AND a.khmc = #{khmc}
+			</if>
+			<if test="khlx != null and khlx != ''">
+				AND a.khlx = #{khlx}
+			</if>
+			<if test="zjlx != null and zjlx != ''">
+				AND a.zjlx = #{zjlx}
+			</if>
+			<if test="zjhm != null and zjhm != ''">
+				AND a.zjhm = #{zjhm}
+			</if>
+			<if test="zt != null and zt != ''">
+				AND a.zt = #{zt}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="KhCyz">
+		SELECT 
+			<include refid="khCyzColumns"/>
+		FROM kh_cyz a
+		<include refid="khCyzJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO kh_cyz(
+			id,
+			khbh,
+			khmc,
+			khlx,
+			zjlx,
+			zjhm,
+			bz,
+			zt,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{khbh},
+			#{khmc},
+			#{khlx},
+			#{zjlx},
+			#{zjhm},
+			#{bz},
+			#{zt},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE kh_cyz SET 	
+			khbh = #{khbh},
+			khmc = #{khmc},
+			khlx = #{khlx},
+			zjlx = #{zjlx},
+			zjhm = #{zjhm},
+			bz = #{bz},
+			zt = #{zt}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM kh_cyz
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
